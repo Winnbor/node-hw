@@ -7,56 +7,66 @@ const contactsPath = path.join(
   path.basename("./db/contacts.json")
 );
 
-function listContacts() {
-  fs.readFile(contactsPath)
-    .then((data) => console.table(JSON.parse(data.toString())))
-    .catch((err) => console.log(err.message));
+async function listContacts() {
+  try {
+    const data = await fs.readFile(contactsPath);
+    console.table(JSON.parse(data.toString()));
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
-function getContactById(contactId) {
-  fs.readFile(contactsPath)
-    .then((data) => {
-      const structuredData = JSON.parse(data.toString());
+async function getContactById(contactId) {
+  try {
+    const data = await fs.readFile(contactsPath);
 
-      const contact = structuredData.find((el) => {
-        return el.id === contactId;
-      });
+    const structuredData = JSON.parse(data.toString());
 
-      console.table(contact);
-    })
-    .catch((err) => console.log(err.message));
+    const contact = structuredData.find((el) => {
+      return el.id === contactId;
+    });
+
+    console.table(contact);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
-function addContact(name, email, phone) {
-  fs.readFile(contactsPath)
-    .then((data) => {
-      const structuredData = JSON.parse(data.toString());
-      const newId = structuredData.length + 1;
-      const newContact = { id: newId, name, email, phone };
+async function addContact(name, email, phone) {
+  try {
+    const data = await fs.readFile(contactsPath);
 
-      structuredData.push(newContact);
+    const structuredData = JSON.parse(data.toString());
 
-      fs.writeFile(contactsPath, JSON.stringify(structuredData, null, 2));
+    const newId = structuredData.length + 1;
+    const newContact = { id: newId, name, email, phone };
 
-      console.table(newContact);
-    })
-    .catch((err) => console.log(err.message));
+    structuredData.push(newContact);
+
+    fs.writeFile(contactsPath, JSON.stringify(structuredData, null, 2));
+
+    console.table(newContact);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
-function removeContact(contactId) {
-  fs.readFile(contactsPath)
-    .then((data) => {
-      const structuredData = JSON.parse(data.toString());
+async function removeContact(contactId) {
+  try {
+    const data = await fs.readFile(contactsPath);
 
-      const newData = structuredData.filter((el) => {
-        return el.id !== contactId;
-      });
+    const structuredData = JSON.parse(data.toString());
 
-      fs.writeFile(contactsPath, JSON.stringify(newData, null, 2));
+    const newData = structuredData.filter((el) => {
+      return el.id !== contactId;
+    });
 
-      console.table(newData);
-    })
-    .catch((err) => console.log(err.message));
+    fs.writeFile(contactsPath, JSON.stringify(newData, null, 2));
+
+    console.table(newData);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 module.exports = {
