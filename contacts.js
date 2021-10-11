@@ -9,7 +9,7 @@ const contactsPath = path.join(
 
 function listContacts() {
   fs.readFile(contactsPath)
-    .then((data) => console.log(JSON.parse(data.toString())))
+    .then((data) => console.table(JSON.parse(data.toString())))
     .catch((err) => console.log(err.message));
 }
 
@@ -22,7 +22,7 @@ function getContactById(contactId) {
         return el.id === contactId;
       });
 
-      console.log(contact);
+      console.table(contact);
     })
     .catch((err) => console.log(err.message));
 }
@@ -38,7 +38,7 @@ function addContact(name, email, phone) {
 
       fs.writeFile(contactsPath, JSON.stringify(structuredData, null, 2));
 
-      console.log(newContact);
+      console.table(newContact);
     })
     .catch((err) => console.log(err.message));
 }
@@ -54,7 +54,7 @@ function removeContact(contactId) {
 
       fs.writeFile(contactsPath, JSON.stringify(newData, null, 2));
 
-      console.log(newData);
+      console.table(newData);
     })
     .catch((err) => console.log(err.message));
 }
