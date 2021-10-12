@@ -3,8 +3,8 @@ const fs = require("fs").promises;
 const path = require("path");
 
 const contactsPath = path.join(
-  path.dirname("./db/contacts.json"),
-  path.basename("./db/contacts.json")
+  path.dirname("db/contacts.json"),
+  path.basename("db/contacts.json")
 );
 
 async function listContacts() {
